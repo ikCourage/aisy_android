@@ -636,7 +636,6 @@ public class Listoy extends USprite implements ITEvent
 					obj.measure(widthMeasureSpec, heightMeasureSpec);
 					obj.setuX((int)_x);
 					obj.setuY((int)_y);
-					obj.layout();
 					_x += obj.getuWidth() + iData.paddingH + iData.marginH;
 					w = Math.max(w, obj.getuWidth());
 					h = Math.max(h, obj.getuHeight());
@@ -844,7 +843,6 @@ public class Listoy extends USprite implements ITEvent
 				else {
 					obj.setuX((int)(iData.marginH + iData.moveWidth * index));
 				}
-				obj.layout();
 			}
 			return index;
 		}

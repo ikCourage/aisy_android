@@ -42,42 +42,42 @@ public class USprite extends ViewGroup implements IClear
 		USprite us;
 		View obj;
 		for (int i = 0, l = getChildCount(); i < l; ++i) {
-        	obj = getChildAt(i);
-        	measureChild(obj, widthMeasureSpec, heightMeasureSpec);
-        	if (US.isInstance(obj)) {
-        		us = (USprite)obj;
-        		x = (int)us.getuX();
-        		y = (int)us.getuY();
-        		w = us.getuWidth() + x;
-        		h = us.getuHeight() + y;
-        	}
-        	else {
-        		x = obj.getLeft();
-        		y = obj.getTop();
-        		w = obj.getMeasuredWidth() + x;
-        		h = obj.getMeasuredHeight() + y;
-        	}
-        	if (w > 0) {
-        		if (x >= width || w > width) {
-        			width = w;
-        		}
-        		else if (x < 0) {
-        			if (w > width) {
-        				width = w;
-        			}
-        		}
-        	}
-        	if (h > 0) {
-        		if (y >= height || h > height) {
-        			height = h;
-        		}
-        		else if (y < 0) {
-        			if (h > height) {
-        				height = h;
-        			}
-        		}
-        	}
-        }
+			obj = getChildAt(i);
+			measureChild(obj, widthMeasureSpec, heightMeasureSpec);
+			if (US.isInstance(obj)) {
+				us = (USprite)obj;
+				x = (int)us.getuX();
+				y = (int)us.getuY();
+				w = us.getuWidth() + x;
+				h = us.getuHeight() + y;
+			}
+			else {
+				x = obj.getLeft();
+				y = obj.getTop();
+				w = obj.getMeasuredWidth() + x;
+				h = obj.getMeasuredHeight() + y;
+			}
+			if (w > 0) {
+				if (x >= width || w > width) {
+					width = w;
+				}
+				else if (x < 0) {
+					if (w > width) {
+						width = w;
+					}
+				}
+			}
+			if (h > 0) {
+				if (y >= height || h > height) {
+					height = h;
+				}
+				else if (y < 0) {
+					if (h > height) {
+						height = h;
+					}
+				}
+			}
+		}
 		setMeasuredDimension(width, height);
 	}
 	
@@ -98,32 +98,32 @@ public class USprite extends ViewGroup implements IClear
 	
 	public void setuX(int value)
 	{
-		setLeft(value);
+		layout(value, getuY(), value + getuWidth(), getuY() + getuHeight());
 	}
 	
 	public void setuY(int value)
 	{
-		setTop(value);
+		layout(getuX(), value, getuX() + getuWidth(), value + getuHeight());
 	}
 	
 	public void setuLeft(int value)
 	{
-		setLeft(value);
+		layout(value, getuY(), value + getuWidth(), getuY() + getuHeight());
 	}
 	
 	public void setuRight(int value)
 	{
-		setRight(value);
+		layout(getuX(), getuY(), value, getuY() + getuHeight());
 	}
 	
 	public void setuTop(int value)
 	{
-		setTop(value);
+		layout(getuX(), value, getuX() + getuWidth(), value + getuHeight());
 	}
 	
 	public void setuBottom(int value)
 	{
-		setBottom(value);
+		layout(getuX(), getuY(), getuX() + getuWidth(), value);
 	}
 	
 	public void setuWidth(int value)
