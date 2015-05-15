@@ -60,11 +60,11 @@ public class Listoy extends USprite implements ITEvent
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		getData().widthMeasureSpec = widthMeasureSpec;
 		iData.heightMeasureSpec = heightMeasureSpec;
+		if (null == iData.group && null != iData.dataProvider && (null != iData.itemRenderer || null != iData.iitemRenderer)) {
+			initializeView();
+		}
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		if (iData.mode == ListoyEnum.MODE_SHOW) {
-			if (null == iData.group && null != iData.dataProvider && (null != iData.itemRenderer || null != iData.iitemRenderer)) {
-				initializeView();
-			}
 			iData.group.setuWidth((int)iData.maskWidth);
 			iData.group.setuHeight((int)iData.maskHeight);
 			setMeasuredDimension((int)iData.maskWidth, (int)iData.maskHeight);
@@ -91,6 +91,7 @@ public class Listoy extends USprite implements ITEvent
 	{
 		iData.group.setuX(0);
 		iData.group.setuY(0);
+		measure(iData.widthMeasureSpec, iData.heightMeasureSpec);
 		if (iData.mode != ListoyEnum.MODE_SHOW) {
 			iData.curPage = 1;
 			iData.totalPage = iData.dataProvider.size() == 0 ? 1 : (int)Math.ceil(iData.dataProvider.size() / (iData.row * iData.column));
@@ -879,11 +880,14 @@ public class Listoy extends USprite implements ITEvent
 			}
 			view = null;
 		}
+		
 	}
 	
 	public interface IItemRenderer
 	{
+		
 		ListoyItem init(String name, int index, Object data);
+		
 	}
 
 	protected class Group extends USprite

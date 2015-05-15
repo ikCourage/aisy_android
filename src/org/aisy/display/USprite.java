@@ -1,5 +1,6 @@
 package org.aisy.display;
 
+import org.aisy.autoclear.AisyAutoClear;
 import org.aisy.interfaces.IClear;
 
 import android.content.Context;
@@ -9,6 +10,11 @@ import android.view.ViewGroup;
 
 public class USprite extends ViewGroup implements IClear
 {
+	/**
+	 * 动态数据
+	 */
+	protected Object __dynamic;
+
 	/**
 	 * @param context
 	 * @param attrs
@@ -43,37 +49,39 @@ public class USprite extends ViewGroup implements IClear
 		View obj;
 		for (int i = 0, l = getChildCount(); i < l; ++i) {
 			obj = getChildAt(i);
-			measureChild(obj, widthMeasureSpec, heightMeasureSpec);
-			if (US.isInstance(obj)) {
-				us = (USprite)obj;
-				x = (int)us.getuX();
-				y = (int)us.getuY();
-				w = us.getuWidth() + x;
-				h = us.getuHeight() + y;
-			}
-			else {
-				x = obj.getLeft();
-				y = obj.getTop();
-				w = obj.getMeasuredWidth() + x;
-				h = obj.getMeasuredHeight() + y;
-			}
-			if (w > 0) {
-				if (x >= width || w > width) {
-					width = w;
+			if (obj.getVisibility() != GONE) {
+				measureChild(obj, widthMeasureSpec, heightMeasureSpec);
+				if (US.isInstance(obj)) {
+					us = (USprite)obj;
+					x = (int)us.getuX();
+					y = (int)us.getuY();
+					w = us.getuWidth() + x;
+					h = us.getuHeight() + y;
 				}
-				else if (x < 0) {
+				else {
+					x = obj.getLeft();
+					y = obj.getTop();
+					w = obj.getMeasuredWidth() + x;
+					h = obj.getMeasuredHeight() + y;
+				}
+				if (w > 0) {
 					if (w > width) {
 						width = w;
 					}
+					else if (x < 0) {
+						if (w > width) {
+							width = w;
+						}
+					}
 				}
-			}
-			if (h > 0) {
-				if (y >= height || h > height) {
-					height = h;
-				}
-				else if (y < 0) {
+				if (h > 0) {
 					if (h > height) {
 						height = h;
+					}
+					else if (y < 0) {
+						if (h > height) {
+							height = h;
+						}
 					}
 				}
 			}
@@ -181,6 +189,25 @@ public class USprite extends ViewGroup implements IClear
 		return getMeasuredHeight();
 	}
 	
+	/**
+	 * 设置动态数据
+	 * @param value
+	 */
+	public void setDynamic(Object value)
+	{
+		__dynamic = value;
+		value = null;
+	}
+	
+	/**
+	 * 返回动态数据
+	 * @return 
+	 */
+	public Object getDynamic()
+	{
+		return __dynamic;
+	}
+	
 	public void clearView()
 	{
 		Class<IClear> IC = IClear.class;
@@ -198,6 +225,8 @@ public class USprite extends ViewGroup implements IClear
 
 	public void clear()
 	{
+		AisyAutoClear.remove(this);
+		destroyDrawingCache();
 		Class<IClear> IC = IClear.class;
 		int i = getChildCount();
 		View obj;
@@ -207,8 +236,9 @@ public class USprite extends ViewGroup implements IClear
 			if (IC.isInstance(obj)) ((IClear)obj).clear();
 			else removeViewAt(i);
 		}
-		if (null != getParent()) ((ViewGroup)getParent()).removeView(this);
 		obj = null;
 		IC = null;
+		__dynamic = null;
+		if (null != getParent()) ((ViewGroup)getParent()).removeView(this);
 	}
 }

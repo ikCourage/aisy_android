@@ -7,16 +7,16 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
+import android.widget.HorizontalScrollView;
 
-public class ScrollerView extends ScrollView implements IClear
+public class HorizontalScrollerView extends HorizontalScrollView implements IClear
 {
 	/**
 	 * @param context
 	 * @param attrs
 	 * @param defStyle
 	 */
-	public ScrollerView(Context context, AttributeSet attrs, int defStyle) {
+	public HorizontalScrollerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -24,14 +24,14 @@ public class ScrollerView extends ScrollView implements IClear
 	 * @param context
 	 * @param attrs
 	 */
-	public ScrollerView(Context context, AttributeSet attrs) {
+	public HorizontalScrollerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 	/**
 	 * @param context
 	 */
-	public ScrollerView(Context context) {
+	public HorizontalScrollerView(Context context) {
 		super(context);
 	}
 	
