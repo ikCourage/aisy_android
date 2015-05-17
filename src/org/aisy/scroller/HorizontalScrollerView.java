@@ -4,6 +4,7 @@ import org.aisy.autoclear.AisyAutoClear;
 import org.aisy.interfaces.IClear;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,14 @@ public class HorizontalScrollerView extends HorizontalScrollView implements ICle
 		final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec, getPaddingLeft() + getPaddingRight(), lp.width);
 		final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec, getPaddingTop() + getPaddingBottom(), lp.height);
 		child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+	}
+	
+	@Override
+	protected void dispatchDraw(Canvas canvas) {
+		super.dispatchDraw(canvas);
+		for (int i = 0, l = getChildCount(); i < l; i++) {
+			getChildAt(i).draw(canvas);
+		}
 	}
 	
 	public void clear()
